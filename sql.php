@@ -35,9 +35,16 @@
 			"OBJ_QUERY_VAL"=>"SELECT `obj_val` FROM `obj` WHERE `obj_id`='%s'",
 		);
 		
-		static public mysqli $c;
+		private static mysqli $c;
+		
 		static public function init() {
-			self::$c=@new mysqli(mysql_host,mysql_user,mysql_passwd,mysql_dbname,mysql_port);
+			self::$c=@mysqli_connect(
+				self::mysql_host,
+				self::mysql_user,
+				self::mysql_passwd,
+				self::mysql_dbname,
+				self::mysql_port
+			);
 			if(!self::$c && self::$c->connect_errno) {
 				die("Error Database Connection!".self::$c->connect_error);
 			}
@@ -46,9 +53,11 @@
 		static public function getSQL($name) : string
 		{
 			$args=func_get_args();
-			var_dump($args);
 			return sprintf(self::sql_set[$name],@$args[1],@$args[2],@$args[3],@$args[4],@$args[5],@$args[6],@$args[7]);
 		}
 		
+		static public function query($sql)
+		{
+			return mysqli_query(self::$c,$sql);
+		}
 	}
-	
