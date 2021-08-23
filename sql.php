@@ -7,28 +7,29 @@
 		private const mysql_port=3306;
 		private const sql_set=array(
 			// USR
-			"USR_EXIST"=>"SELECT `id` FROM `usr` WHERE `name`='%s' ",
+			"USR_EXIST"=>"SELECT `id` FROM `usr` WHERE `name`='%s'",
 			"USR_REG"=>"INSERT INTO `usr`(`name`,`passwd`) VALUE('%s','%s')",
-			"USR_UPT_PWD_CHECK"=>"SELECT `passwd` FROM `usr` WHERE `id`=%d",
-			"USR_UPT_PWD"=>"UPDATE `usr` SET `passwd` WHERE `id`=%d",
+			"USR_UPT_PWD"=>"UPDATE `usr` SET `passwd`='%s' WHERE `id`=%d",
 			"USR_LOGIN"=>"SELECT `passwd` FROM `usr` WHERE `id`=%d",
 			
-			// TD
-			"TD_NODE_EXIST"=>"SELECT `obj` FROM `idx` WHERE `index_id`='%d'",
-			"TD_NODE_ADD"=>"INSERT INTO `idx`(`index_id`,`usr`,`father`,`obj`) VALUE('%s','%d','%s','%s')",
+			// NODE
+			"NODE_EXIST"=>"SELECT `obj` FROM `idx` WHERE `idx_id`='%s'",
+			"NODE_QUERY"=>"SELECT * FROM `idx` WHERE `idx_id`='%s'",
+			"NODE_ADD"=>"INSERT INTO `idx`(`idx_id`,`usr`,`father`,`obj`) VALUE('%s','%d','%s','%s')",
 			
-			"TD_NODE_FATHER_QUERY"=>"SELECT `father` FROM `idx` WHERE `index_id`='%d'",
-			"TD_NODE_FATHER_UPDATE"=>"UPDATE `idx` SET `father`='%s' WHERE `index_id`='%s'",
+			"NODE_FATHER_QUERY"=>"SELECT `father` FROM `idx` WHERE `idx_id`='%s'",
+			"NODE_FATHER_UPDATE"=>"UPDATE `idx` SET `father`='%s' WHERE `idx_id`='%s'",
 			
-			"TD_NODE_OBJ_QUERY"=>"SELECT `obj` FROM `idx` WHERE `index_id`='%d'",
-			"TD_NODE_OBJ_UPDATE"=>"UPDATE `idx` SET `obj`='%s' WHERE `index_id`='%s'",
+			"NODE_OBJ_QUERY"=>"SELECT `obj` FROM `idx` WHERE `idx_id`='%s'",
+			"NODE_OBJ_UPDATE"=>"UPDATE `idx` SET `obj`='%s' WHERE `idx_id`='%s'",
 			
-			"TD_NODE_SON_QUERY_ALL"=>"SELECT `son` FROM `idx` WHERE `index_id`='%d'",
-			"TD_NODE_SON_QUERY"=>"SELECT `son` FROM `idx` WHERE `index_id`='%d'
-								  and `son`='%s'",
-			"TD_NODE_SON_ADD"=>"INSERT INTO `idx`(`index_id`,`usr`,`father`,`son`,`obj`) VALUE('%s','%d','%s','%s','%s')",
-			"TD_NODE_SON_UPDATE"=>"SELECT `son` FROM `idx` WHERE `index_id`='%d' and `son`='%s'",
+			"NODE_SON_LIST_ALL"=>"SELECT `son` FROM `idx` WHERE `idx_id`='%s'",
+			"NODE_SON_QUERY"=>"SELECT `read_id` FROM `idx` WHERE `idx_id`='%s' AND `son`='%s'",
+			"NODE_SON_ADD"=>"INSERT INTO `idx`(`idx_id`,`usr`,`father`,`son`,`obj`) VALUE('%s','%d','%s','%s','%s')",
+			"NODE_SON_UPDATE"=>"SELECT `son` FROM `idx` WHERE `idx_id`='%s' and `son`='%s'",
+			"NODE_SON_DELETE"=>"DELETE FROM `idx` WHERE `real_id`=%d",
 			
+			//OBJ
 			"OBJ_ADD"=>"INSERT INTO `obj`(`obj_id`,`obj_info`,`obj_val`) VALUE('%s','%s','%s')",
 			"OBJ_QUERY_ALL"=>"SELECT `obj_info`,`obj_val` FROM `obj` WHERE `obj_id`='%s'",
 			"OBJ_QUERY_INFO"=>"SELECT `obj_info` FROM `obj` WHERE `obj_id`='%s'",
