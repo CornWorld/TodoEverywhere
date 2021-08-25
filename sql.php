@@ -61,4 +61,19 @@
 		{
 			return mysqli_query(self::$c,$sql);
 		}
+		
+		static public function muQuery($sql): bool
+		{
+			return mysqli_multi_query(self::$c,$sql);
+		}
+		
+		static public function storeResult()
+		{
+			return self::$c->store_result();
+		}
+		
+		static public function moreResults(): bool
+		{
+			return self::$c->more_results();
+		}
 	}
