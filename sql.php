@@ -13,22 +13,16 @@
 			"USR_LOGIN"=>"SELECT `passwd` FROM `usr` WHERE `id`=%d",
 			
 			// NODE
-			"NODE_EXIST"=>"SELECT `obj` FROM `idx` WHERE `idx_id`='%s'",
-			"NODE_QUERY"=>"SELECT * FROM `idx` WHERE `idx_id`='%s'",
+			"NODE_INFO"=>"SELECT %s FROM `idx` WHERE `idx_id`='%s'",
+			
 			"NODE_ADD"=>"INSERT INTO `idx`(`idx_id`,`usr`,`father`,`obj`) VALUE('%s','%d','%s','%s')",
+			"NODE_SON_ADD"=>"UPDATE `idx` SET `son`=CONCAT_WS(`son`,'%s,') WHERE `idx_id`=%d",
+			"NODE_SON_DELETE"=>"UPDATE `idx` SET `son`=REPLACE(`son`,'%s,','')",
 			
-			"NODE_FATHER_QUERY"=>"SELECT `father` FROM `idx` WHERE `idx_id`='%s'",
 			"NODE_FATHER_UPDATE"=>"UPDATE `idx` SET `father`='%s' WHERE `idx_id`='%s'",
-			
-			"NODE_OBJ_QUERY"=>"SELECT `obj` FROM `idx` WHERE `idx_id`='%s'",
 			"NODE_OBJ_UPDATE"=>"UPDATE `idx` SET `obj`='%s' WHERE `idx_id`='%s'",
 			
-			"NODE_SON_LIST_ALL"=>"SELECT `son` FROM `idx` WHERE `idx_id`='%s'",
-			"NODE_SON_QUERY"=>"SELECT `read_id` FROM `idx` WHERE `idx_id`='%s' AND `son`='%s'",
-			"NODE_SON_ADD"=>"INSERT INTO `idx`(`idx_id`,`usr`,`father`,`son`,`obj`) VALUE('%s','%d','%s','%s','%s')",
-			"NODE_SON_UPDATE"=>"SELECT `son` FROM `idx` WHERE `idx_id`='%s' and `son`='%s'",
-			"NODE_SON_DELETE"=>"DELETE FROM `idx` WHERE `real_id`=%d",
-			
+			"NODE_DELETE"=>"DELETE FROM `idx` WHERE `idx_id`='%s'",
 			//OBJ
 			"OBJ_ADD"=>"INSERT INTO `obj`(`obj_id`,`obj_info`,`obj_val`) VALUE('%s','%s','%s')",
 			"OBJ_QUERY_ALL"=>"SELECT `obj_info`,`obj_val` FROM `obj` WHERE `obj_id`='%s'",
