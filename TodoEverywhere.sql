@@ -1,6 +1,6 @@
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+08:00";
+SET time_zone = "+00:00";
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,6 +24,12 @@ CREATE TABLE `obj` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 TRUNCATE TABLE `obj`;
+CREATE TABLE `token` (
+  `token` varchar(48) NOT NULL,
+  `time` datetime NOT NULL DEFAULT current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `usr` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(1024) NOT NULL,
@@ -35,6 +41,9 @@ ALTER TABLE `idx`
 
 ALTER TABLE `obj`
   ADD PRIMARY KEY (`obj_id`);
+
+ALTER TABLE `token`
+  ADD PRIMARY KEY (`token`);
 
 ALTER TABLE `usr`
   ADD PRIMARY KEY (`id`);
