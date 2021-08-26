@@ -42,7 +42,7 @@
 			return 0;
 		}
 		static public function change_passwd($username,$old_passwd,$new_passwd) : bool {
-			if(!($uid=self::login($username,self::decode($username,$new_passwd)))) {
+			if(!($uid=self::login($username,$old_passwd))) {
 				$r=sql::query(sql::getSQL("USR_UPT_PWD",self::encode($username,$new_passwd),$uid));
 				return $r ? 1 : 0;
 			}
