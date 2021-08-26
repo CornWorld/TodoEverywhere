@@ -4,9 +4,9 @@
 	{
 		static public function add($node_id, $user_id, $father, $obj) : bool
 		{
-			if(!self::exist($node_id)) {
+			if(!self::exist($node_id) && ($father==-1 || self::exist($father))) {
 				$r=sql::query(sql::getSQL("NODE_ADD", $node_id, $user_id, $father, $obj));
-				return $r ? 1 : 0;
+				return $r && ($father==-1 ? 1 : self::addSon($father,$node_id)) ? 1 : 0;
 			}
 			return 0;
 		}
@@ -21,13 +21,13 @@
 			if($for!='*') {
 				$r=sql::query(sql::getSQL("NODE_INFO", "`{$for}`", $node_id));
 				if($r->num_rows==1) {
-					return $r->fetch_array()[$for];
+					return $r->fetch_assoc()[$for];
 				}
 			}
 			else {
 				$r=sql::query(sql::getSQL("NODE_INFO", "*", $node_id));
 				if($r->num_rows==1) {
-					return $r->fetch_array();
+					return $r->fetch_assoc();
 				}
 			}
 			return false;
@@ -57,7 +57,7 @@
 			return sql::muQuery($mu_sql);
 		}
 		
-		public static function subtree($node_id) : array
+		public static function subtree($node_id,$mod=0) : array
 		{
 			$ret=array();
 			if(self::exist($node_id)) {
@@ -69,7 +69,8 @@
 					$r=self::sons($top);
 					if(!empty($r) && is_array($r)) {
 						$queue=array_merge($r, $queue);
-						$ret=array_merge($r, $ret);
+						if(!$mod) $ret=array_merge($r, $ret);
+						else $ret[$top]=$r;
 						$queue_len+=count($r);
 					}
 				} while(!empty($queue));
@@ -87,4 +88,21 @@
 			}
 			return array();
 		}
+		
+		static public function addSon($node_id,$son) : bool
+		{
+			if(self::exist($node_id) && self::exist($son)) {
+				$sons=self::info($node_id,"son")."{$son},";
+				return sql::query(sql::getSQL("NODE_SON_ADD", $sons, $node_id));
+			}
+			return 0;
+
+		}
+		static public function deleteSon($node_id,$son)
+		{
+			return self::exist($node_id) && self::exist($son)
+				? sql::query(sql::getSQL("NODE_SON_DELETE", $son, $node_id))
+				: 0;
+		}
+		
 	}

@@ -22,8 +22,8 @@
 			"NODE_INFO"=>"SELECT %s FROM `idx` WHERE `idx_id`='%s'",
 			
 			"NODE_ADD"=>"INSERT INTO `idx`(`idx_id`,`usr`,`father`,`obj`) VALUE('%s','%d','%s','%s')",
-			"NODE_SON_ADD"=>"UPDATE `idx` SET `son`=CONCAT_WS(`son`,'%s,') WHERE `idx_id`='%s'",
-			"NODE_SON_DELETE"=>"UPDATE `idx` SET `son`=REPLACE(`son`,'%s,','')",
+			"NODE_SON_ADD"=>"UPDATE `idx` SET `son`='%s' WHERE `idx_id`='%s'",
+			"NODE_SON_DELETE"=>"UPDATE `idx` SET `son`=REPLACE(`son`,'%s,','') WHERE `idx_id`='%s'",
 			
 			"NODE_FATHER_UPDATE"=>"UPDATE `idx` SET `father`='%s' WHERE `idx_id`='%s'",
 			"NODE_OBJ_UPDATE"=>"UPDATE `idx` SET `obj`='%s' WHERE `idx_id`='%s'",
