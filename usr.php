@@ -1,6 +1,7 @@
 <?php
 	class usr
 	{
+		const maxTokenTime=3600*6;
 		static private function encode($username,$passwd) : string {
 			$str=sha1(Crypt($passwd,"TodoEverywhere".$username));
 			$iv=crypto::generateIV("aes-256-cbc");
@@ -46,5 +47,21 @@
 				return $r ? 1 : 0;
 			}
 			return 0;
+		}
+		
+		static public function createToken($username,$passwd) : string {
+			if($uid=self::login($username,$passwd)) {
+				$r=sql::query(sql::getSQL("TOKEN_CREATE",$token=random::getStr(48),$uid));
+				if($r) return $token;
+			}
+			return "";
+		}
+		static public function tokenTime($token,$mod=0) {
+			$r=sql::query(sql::getSQL("TOKEN_TIME",$token));
+			if($r && $r->num_rows==1) {
+				$t=strtotime($r->fetch_array()["time"]);
+				return $mod ? self::maxTokenTime<=(time()-$t) : $t;
+			}
+			return false;
 		}
 	}

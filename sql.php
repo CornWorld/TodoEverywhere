@@ -12,6 +12,10 @@
 			"USR_UPT_PWD"=>"UPDATE `usr` SET `passwd`='%s' WHERE `id`=%d",
 			"USR_LOGIN"=>"SELECT `passwd` FROM `usr` WHERE `id`=%d",
 			
+			// TOKEN
+			"TOKEN_CREATE"=>"INSERT INTO `token`(`token`,`user_id`) VALUE('%s',%d)",
+			"TOKEN_TIME"=>"SELECT `time` FROM `token` WHERE `token`='%s'",
+			
 			// NODE
 			"NODE_INFO"=>"SELECT %s FROM `idx` WHERE `idx_id`='%s'",
 			
