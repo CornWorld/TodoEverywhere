@@ -1,5 +1,7 @@
 <?php
-	class sql {
+	
+	class sql
+	{
 		private const mysql_host="23.224.197.111";
 		private const mysql_user="TodoEverywhere";
 		private const mysql_passwd="TodoEverywhere";
@@ -14,7 +16,7 @@
 			
 			// TOKEN
 			"TOKEN_CREATE"=>"INSERT INTO `token`(`token`,`user_id`) VALUE('%s',%d)",
-			"TOKEN_TIME"=>"SELECT `time` FROM `token` WHERE `token`='%s'",
+			"TOKEN_INFO"=>"SELECT %s FROM `token` WHERE `token`='%s'",
 			
 			// NODE
 			"NODE_INFO"=>"SELECT %s FROM `idx` WHERE `idx_id`='%s'",
@@ -36,7 +38,8 @@
 		
 		private static mysqli $c;
 		
-		static public function init() {
+		static public function init()
+		{
 			self::$c=@mysqli_connect(
 				self::mysql_host,
 				self::mysql_user,
@@ -52,17 +55,17 @@
 		static public function getSQL($name) : string
 		{
 			$args=func_get_args();
-			return sprintf(self::sql_set[$name],@$args[1],@$args[2],@$args[3],@$args[4],@$args[5],@$args[6],@$args[7]);
+			return sprintf(self::sql_set[$name], @$args[1], @$args[2], @$args[3], @$args[4], @$args[5], @$args[6], @$args[7]);
 		}
 		
 		static public function query($sql)
 		{
-			return mysqli_query(self::$c,$sql);
+			return mysqli_query(self::$c, $sql);
 		}
 		
-		static public function muQuery($sql): bool
+		static public function muQuery($sql) : bool
 		{
-			return mysqli_multi_query(self::$c,$sql);
+			return mysqli_multi_query(self::$c, $sql);
 		}
 		
 		static public function storeResult()
@@ -70,7 +73,7 @@
 			return self::$c->store_result();
 		}
 		
-		static public function moreResults(): bool
+		static public function moreResults() : bool
 		{
 			return self::$c->more_results();
 		}
